@@ -1,0 +1,55 @@
+const express = require('express');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
+const SECRET = 'testsecret';
+let users = [{ username: 'test', password: bcrypt.hashSync('test123', 8) }];
+let items = [{ id: 1, text: 'First item' }];
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(u => u.username === username);
+  if (!user || !bcrypt.compareSync(password, user.password)) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+  const token = jwt.sign({ username }, SECRET, { expiresIn: '1h' });
+  res.json({ token });
+});
+
+function auth(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader) return res.sendStatus(401);
+  const token = authHeader.split(' ')[1];
+  jwt.verify(token, SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
+app.get('/items', auth, (req, res) => res.json(items));
+app.post('/items', auth, (req, res) => {
+  const { text } = req.body;
+  const newItem = { id: Date.now(), text };
+  items.push(newItem);
+  res.status(201).json(newItem);
+});
+app.put('/items/:id', auth, (req, res) => {
+  const item = items.find(i => i.id == req.params.id);
+  if (!item) return res.sendStatus(404);
+  item.text = req.body.text;
+  res.json(item);
+});
+app.delete('/items/:id', auth, (req, res) => {
+  const idx = items.findIndex(i => i.id == req.params.id);
+  if (idx === -1) return res.sendStatus(404);
+  items.splice(idx, 1);
+  res.sendStatus(204);
+});
+
+app.listen(4000, () => console.log('Backend running on http://localhost:4000'));

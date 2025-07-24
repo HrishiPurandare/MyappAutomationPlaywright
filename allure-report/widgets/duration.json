@@ -1,0 +1,1 @@
+[{"uid":"e6c278b0bb8a7fd0","name":"login, add, edit, delete item","time":{"start":1753359255321,"stop":1753359256993,"duration":1672},"status":"passed","severity":"normal"},{"uid":"fa7349d0917e2327","name":"API: login, CRUD items","time":{"start":1753359255319,"stop":1753359255447,"duration":128},"status":"passed","severity":"normal"}]
