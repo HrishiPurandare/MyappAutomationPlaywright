@@ -1,3 +1,8 @@
+// TEST ONLY: Reset items (for Playwright test isolation)
+app.post('/test/reset', (req, res) => {
+  items = [];
+  res.json({ ok: true });
+});
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -34,7 +39,10 @@ function auth(req, res, next) {
 
 app.get('/items', auth, (req, res) => res.json(items));
 app.post('/items', auth, (req, res) => {
-  const { text } = req.body;
+  const text = (req.body.text || '').trim();
+  if (!text) return res.status(400).json({ error: 'Item text cannot be empty' });
+  // Prevent duplicate items with same text (optional, for robustness)
+  // if (items.some(i => i.text === text)) return res.status(409).json({ error: 'Duplicate item' });
   const newItem = { id: Date.now(), text };
   items.push(newItem);
   res.status(201).json(newItem);
@@ -42,14 +50,16 @@ app.post('/items', auth, (req, res) => {
 app.put('/items/:id', auth, (req, res) => {
   const item = items.find(i => i.id == req.params.id);
   if (!item) return res.sendStatus(404);
-  item.text = req.body.text;
+  const text = (req.body.text || '').trim();
+  if (!text) return res.status(400).json({ error: 'Item text cannot be empty' });
+  item.text = text;
   res.json(item);
 });
 app.delete('/items/:id', auth, (req, res) => {
   const idx = items.findIndex(i => i.id == req.params.id);
   if (idx === -1) return res.sendStatus(404);
-  items.splice(idx, 1);
-  res.sendStatus(204);
+  const deleted = items.splice(idx, 1);
+  res.json(deleted[0]);
 });
 
 app.listen(4000, () => console.log('Backend running on http://localhost:4000'));

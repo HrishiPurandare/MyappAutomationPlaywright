@@ -1,0 +1,116 @@
+# Page snapshot
+
+```yaml
+- heading "Items" [level=2]
+- textbox "New item"
+- button "Add"
+- list:
+  - listitem:
+    - text: First item
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: EditMe
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe1
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - text: DeleteMe2
+    - button "Edit"
+    - button "Delete"
+  - listitem:
+    - textbox
+    - button "Save"
+    - button "Cancel"
+- button "Logout"
+- text: Cannot save empty item
+```
