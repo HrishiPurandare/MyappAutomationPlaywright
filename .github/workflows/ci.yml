@@ -73,8 +73,36 @@ jobs:
 
       - name: Run Playwright tests with Allure
         run: npm run test
+
+      - name: Run frontend code coverage
+        run: npm test -- --coverage --watchAll=false
+        working-directory: frontend
+
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage
+
+      - name: Run backend code coverage
+        run: npm run coverage
+        working-directory: backend
+
+      - name: Upload backend coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: backend/coverage
+
+      - name: Upload Playwright snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-snapshots
+          path: tests/__screenshots__
+
       - name: Generate Allure report
         run: npm run allure:generate
+
       - name: Upload Allure report artifact
         uses: actions/upload-artifact@v4
         with:

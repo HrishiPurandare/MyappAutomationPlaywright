@@ -12,6 +12,8 @@ test('login fails with wrong credentials', async ({ page }) => {
   await page.click('button:has-text("Login")');
   // Use the last div with the error text to avoid strict mode violation
   await expect(page.locator('div', { hasText: 'Invalid credentials' }).last()).toBeVisible();
+  // Visual snapshot for failed login
+  await expect(page).toHaveScreenshot('login-fail.png');
   console.log('Negative login test passed.');
 });
 
@@ -26,6 +28,8 @@ test('cannot add empty item', async ({ page }) => {
   // Should not add an empty item, so count remains the same
   const itemCount = await page.locator('li').count();
   await expect(page.locator('li')).toHaveCount(itemCount);
+  // Visual snapshot for empty add
+  await expect(page).toHaveScreenshot('add-empty-item.png');
   console.log('Empty item add negative test passed.');
 });
 
