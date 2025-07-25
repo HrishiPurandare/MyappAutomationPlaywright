@@ -23,12 +23,9 @@ jobs:
         run: npm ci || npm install
         working-directory: backend
 
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
-      - name: Generate Playwright snapshots on CI (TEMP)
-        run: npx playwright test --update-snapshots
-
 
       - name: Install frontend dependencies
         run: npm ci || npm install
@@ -62,6 +59,9 @@ jobs:
           echo "Frontend did not start in time. Last 40 lines of frontend.log:"
           tail -n 40 ./frontend.log || echo "No frontend.log found"
           exit 1
+
+      - name: Generate Playwright snapshots on CI (TEMP)
+        run: npx playwright test --update-snapshots
 
       - name: Upload backend log
         uses: actions/upload-artifact@v4
