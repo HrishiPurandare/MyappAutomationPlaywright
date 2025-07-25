@@ -22,10 +22,21 @@ jobs:
         working-directory: backend
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: frontend
+
       - name: Start backend server
         run: |
           cd backend
           nohup node server.js > ../backend.log 2>&1 &
+
+      - name: Start frontend server
+        run: |
+          cd frontend
+          nohup npm start > ../frontend.log 2>&1 &
+
       - name: Wait for backend to be ready
         run: |
           for i in {1..40}; do
@@ -35,11 +46,29 @@ jobs:
           echo "Backend did not start in time. Last 40 lines of backend.log:"
           tail -n 40 ./backend.log || echo "No backend.log found"
           exit 1
+
+      - name: Wait for frontend to be ready
+        run: |
+          for i in {1..40}; do
+            if nc -z localhost 3000; then echo Frontend up; exit 0; fi
+            sleep 1
+          done
+          echo "Frontend did not start in time. Last 40 lines of frontend.log:"
+          tail -n 40 ./frontend.log || echo "No frontend.log found"
+          exit 1
+
       - name: Upload backend log
         uses: actions/upload-artifact@v4
         with:
           name: backend-log
           path: ./backend.log
+
+      - name: Upload frontend log
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-log
+          path: ./frontend.log
+
       - name: Run Playwright tests with Allure
         run: npm run test
       - name: Generate Allure report
