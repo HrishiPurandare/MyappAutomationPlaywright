@@ -28,11 +28,13 @@ jobs:
           nohup node server.js > ../backend.log 2>&1 &
       - name: Wait for backend to be ready
         run: |
-          for i in {1..20}; do
+          for i in {1..40}; do
             if nc -z localhost 4000; then echo Backend up; exit 0; fi
             sleep 1
           done
-          echo Backend did not start in time; exit 1
+          echo "Backend did not start in time. Last 40 lines of backend.log:"
+          tail -n 40 ./backend.log || echo "No backend.log found"
+          exit 1
       - name: Upload backend log
         uses: actions/upload-artifact@v4
         with:
