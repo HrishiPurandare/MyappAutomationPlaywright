@@ -23,6 +23,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+
       - name: Install frontend dependencies
         run: npm ci
         working-directory: frontend
@@ -33,9 +34,8 @@ jobs:
           nohup node server.js > ../backend.log 2>&1 &
 
       - name: Start frontend server
-        run: |
-          cd frontend
-          nohup npm start > ../frontend.log 2>&1 &
+        run: nohup npm start > ../frontend.log 2>&1 &
+        working-directory: frontend
 
       - name: Wait for backend to be ready
         run: |
