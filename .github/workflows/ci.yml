@@ -22,8 +22,12 @@ jobs:
       - name: Install backend dependencies
         run: npm ci || npm install
         working-directory: backend
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      - name: Generate Playwright snapshots on CI (TEMP)
+        run: npx playwright test --update-snapshots
 
 
       - name: Install frontend dependencies
