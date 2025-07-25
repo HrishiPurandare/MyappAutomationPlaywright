@@ -23,11 +23,18 @@ cd ../frontend
 npm install
 npm start
 
+
 ### 3. Run tests (in project root)
 npm install
 npx playwright test
 
-## Assumptions / Limitations
+### 4. Run tests with Allure report (in project root)
+npm install
+npx playwright test --reporter=line,allure-playwright
+npx allure generate ./allure-results --clean -o ./allure-report
+npx allure open ./allure-report
+
+##  Limitations
 - No persistent DB, in-memory only
 - For demo only, not production ready
 
