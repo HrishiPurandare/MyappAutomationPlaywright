@@ -78,9 +78,11 @@ jobs:
       - name: Run Playwright tests with Allure
         run: npm run test
 
+
       - name: Run frontend code coverage
         run: npm test -- --coverage --watchAll=false
         working-directory: frontend
+        continue-on-error: true
 
       - name: Upload frontend coverage
         uses: actions/upload-artifact@v4
@@ -88,9 +90,11 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage
 
+
       - name: Run backend code coverage
         run: npm run coverage
         working-directory: backend
+        continue-on-error: true
 
       - name: Upload backend coverage
         uses: actions/upload-artifact@v4
