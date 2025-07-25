@@ -31,6 +31,5 @@ npx playwright test
 - No persistent DB, in-memory only
 - For demo only, not production ready
 
-## Bonus
-- Add Playwright code coverage or GitHub Actions as needed
+
 
