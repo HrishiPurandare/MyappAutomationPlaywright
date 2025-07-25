@@ -73,9 +73,9 @@ app.put('/items/:id', auth, (req, res) => {
 });
 app.delete('/items/:id', auth, (req, res) => {
   const idx = items.findIndex(i => i.id == req.params.id);
-  if (idx === -1) return res.status(404).json({ error: 'Item not found' });
-  const deleted = items.splice(idx, 1);
-  res.json(deleted[0]);
+  if (idx === -1) return res.sendStatus(404);
+  items.splice(idx, 1);
+  res.sendStatus(204);
 });
 
 app.listen(4000, () => console.log('Backend running on http://localhost:4000'));
