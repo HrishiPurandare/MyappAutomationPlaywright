@@ -1,8 +1,3 @@
-// TEST ONLY: Reset items (for Playwright test isolation)
-app.post('/test/reset', (req, res) => {
-  items = [];
-  res.json({ ok: true });
-});
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -15,6 +10,12 @@ app.use(bodyParser.json());
 const SECRET = 'testsecret';
 let users = [{ username: 'test', password: bcrypt.hashSync('test123', 8) }];
 let items = [{ id: 1, text: 'First item' }];
+
+// TEST ONLY: Reset items (for Playwright test isolation)
+app.post('/test/reset', (req, res) => {
+  items = [];
+  res.json({ ok: true });
+});
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
