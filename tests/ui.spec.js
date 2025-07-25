@@ -12,7 +12,7 @@ test('login fails with wrong credentials', async ({ page }) => {
   await page.click('button:has-text("Login")');
   // Use the last div with the error text to avoid strict mode violation
   await expect(page.locator('div', { hasText: 'Invalid credentials' }).last()).toBeVisible();
-  // Visual snapshot for failed login
+1  // Visual snapshot for failed login
   await expect(page).toHaveScreenshot('login-fail.png');
   console.log('Negative login test passed.');
 });
